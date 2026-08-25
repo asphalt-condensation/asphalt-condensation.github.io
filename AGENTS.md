@@ -54,8 +54,8 @@ The default locale does not appear in the path. Locale codes are lowercase and u
 3. Keep support and privacy pages complete in every declared locale.
 4. Update the applicable Issue Form dropdown and `.github/labels.json` when adding an app.
 5. Use owned app artwork under `public/apps/<slug>/`; do not hotlink assets.
-6. Run `npm run format` after manual edits.
-7. Run `npm run check` and `npm run test:e2e` before considering the change complete.
+6. Run `rocket site format` after manual edits.
+7. Run `rocket site check` and `rocket site test` before considering the change complete.
 8. For visible UI changes, inspect Playwright screenshots at desktop and mobile widths.
 9. Update relevant docs when behavior, structure, commands, or release procedures change.
 
@@ -83,17 +83,22 @@ The default locale does not appear in the path. Locale codes are lowercase and u
 
 ```bash
 npm ci
-npm run dev
-npm run format
-npm run check
-npx playwright install chromium
-npm run test:e2e
+npx rocket site launch
+npx rocket site format
+npx rocket site check
+npx rocket site browsers
+npx rocket site test
 ```
+
+Use `rocket` without `npx` when the global CLI is available. The pinned
+project-local version remains the CI source of truth. Direct npm commands are
+implementation details declared by `rocket.toml`, except for the initial
+`npm ci` bootstrap.
 
 Create a new app scaffold:
 
 ```bash
-npm run new:app -- --slug example-app --name "Example App" --zh-name "示例 App" --platform iOS
+npx rocket site new-app --slug example-app --name "Example App" --zh-name "示例 App" --platform iOS
 ```
 
 The scaffold is incomplete by design. Never remove `TODO` text just to make CI green; replace it with verified content.
@@ -112,8 +117,8 @@ A content or code change is complete only when:
 
 - all declared locale pages are coherent;
 - no placeholders or private email addresses are present in public files;
-- `npm run check` passes;
-- `npm run test:e2e` passes;
+- `rocket site check` passes;
+- `rocket site test` passes;
 - visible changes were inspected at desktop and mobile sizes;
 - related documentation is current;
 - the final response names any remaining external setup or unverified app fact.

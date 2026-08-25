@@ -19,7 +19,7 @@
 3. 根据任务打开一到两份相关文档，不要一次加载全部文件。
 4. 如果是某个 App，读取 `docs/apps/<slug>.md`、对应 manifest，以及该 App 的所有语言页面。
 5. 先检查工作区状态，保留用户已有修改。
-6. 完成实现、格式化、静态校验、浏览器测试和视觉检查。
+6. 通过 `rocket site format`、`rocket site check` 和 `rocket site test` 完成格式化、静态校验、浏览器测试和视觉检查。
 7. 只有用户明确要求时才 commit 或 push。
 
 ## 任务路由

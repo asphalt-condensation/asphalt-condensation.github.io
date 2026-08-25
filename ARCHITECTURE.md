@@ -44,4 +44,4 @@ GitHub Pages is the sole production host. A successful historical commit is the 
 - Development dependencies: type checking, formatting, structured frontmatter/HTML parsing, Playwright, and axe-core.
 - No client JavaScript framework is shipped to visitors.
 - Dependabot checks npm and GitHub Actions monthly.
-- Major dependency upgrades require local `npm run check` and browser tests before merge.
+- Major dependency upgrades require local `rocket site check` and browser tests before merge.

@@ -29,11 +29,12 @@ The URLs become live only after the public repository exists, GitHub Pages is co
 
 ## Quick start
 
-Requirements: Node.js 24 and npm.
+Requirements: Node.js 24 and npm. Rocket is installed project-locally by the
+bootstrap step, so CI and contributors use the same pinned CLI version.
 
 ```bash
 npm ci
-npm run dev
+npx rocket site launch
 ```
 
 The local site is available at `http://localhost:4321/`.
@@ -41,23 +42,28 @@ The local site is available at `http://localhost:4321/`.
 Run the complete local quality gate:
 
 ```bash
-npm run check
-npx playwright install chromium
-npm run test:e2e
+npx rocket site check
+npx rocket site browsers
+npx rocket site test
 ```
 
 Format all supported files:
 
 ```bash
-npm run format
+npx rocket site format
 ```
+
+When Rocket is installed globally, omit `npx` and use the shorter
+`rocket site <command>` form. `npm ci` remains the portable bootstrap because
+the project-local Rocket binary does not exist until dependencies are
+installed. Run `rocket inspect site` to view the complete command catalog.
 
 ## Adding an app
 
 Start with the deterministic scaffold:
 
 ```bash
-npm run new:app -- --slug example-app --name "Example App" --zh-name "示例 App" --platform iOS
+npx rocket site new-app --slug example-app --name "Example App" --zh-name "示例 App" --platform iOS
 ```
 
 The scaffold intentionally creates `TODO` markers and no icon. The quality gate remains red until the content is truthful, the icon is supplied, Issue Forms are updated, and every required page is complete. Follow [`docs/ADD_AN_APP.md`](docs/ADD_AN_APP.md).
@@ -75,6 +81,7 @@ The scaffold intentionally creates `TODO` markers and no icon. The quality gate 
 | `.github/ISSUE_TEMPLATE/` | Public support intake forms                                    |
 | `.github/workflows/`      | Quality, label sync, and Pages deployment                      |
 | `.agents/skills/`         | Repository-local Codex skills                                  |
+| `rocket.toml`             | Human-friendly local and CI command routing                    |
 | `scripts/`                | Deterministic content and built-site validation                |
 | `tests/e2e/`              | Desktop/mobile browser and accessibility tests                 |
 | `docs/`                   | Architecture, operations, App Store, and handoff documentation |

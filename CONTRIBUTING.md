@@ -8,9 +8,9 @@ Read `AGENTS.md`, then read the specific documentation for your change. For app-
 
 1. Create a focused branch from the latest `main`.
 2. Make the smallest coherent change.
-3. Run `npm run format`.
-4. Run `npm run check`.
-5. Install Chromium once with `npx playwright install chromium`, then run `npm run test:e2e`.
+3. Run `rocket site format`.
+4. Run `rocket site check`.
+5. Install Chromium once with `rocket site browsers`, then run `rocket site test`.
 6. Explain the factual source for privacy or app-behavior changes in the pull request.
 7. Include desktop and mobile screenshots for visible layout changes.
 

@@ -17,7 +17,10 @@ Production is GitHub Pages for the repository `asphalt-condensation/asphalt-cond
 7. Run the label-sync workflow if its initial path-triggered run did not occur.
 8. Wait for `Deploy GitHub Pages` to complete.
 
-The deployment workflow validates formatting, content relationships, types, the static build, built links, accessibility, and responsive overflow before uploading `dist/`.
+The deployment workflow bootstraps dependencies with `npm ci`, then routes
+public-safety checks, formatting, content relationships, types, the static
+build, built links, browser setup, accessibility, and responsive overflow
+through the pinned project-local Rocket commands before uploading `dist/`.
 
 ## Production smoke test
 
@@ -45,6 +48,8 @@ Do not upload `dist/` to the repository. Do not switch Pages to deploy from a br
 | Symptom                       | Check                                                                     |
 | ----------------------------- | ------------------------------------------------------------------------- |
 | `npm ci` fails                | `package-lock.json` is committed and matches `package.json`               |
+| Rocket command fails          | `rocket.toml` command mapping and pinned CLI version                      |
+| Public-safety check fails     | Email, private path, credential pattern, sensitive file, or commit email  |
 | Content validation fails      | Missing locale pair, icon, route invariant, placeholder, or public email  |
 | Astro check/build fails       | Schema mismatch, invalid frontmatter, or component type error             |
 | Dist validation fails         | Broken internal URL, missing metadata, missing `h1`, or image alt issue   |

@@ -69,6 +69,6 @@ Stop release and request a deeper legal/privacy review when adding:
 
 ## 6. Verify
 
-Run `npm run check` and browser tests. Read the rendered policy in every locale. Compare it line by line with App Store Connect answers and the actual release build.
+Run `rocket site check` and browser tests. Read the rendered policy in every locale. Compare it line by line with App Store Connect answers and the actual release build.
 
 The final reviewer should be able to answer: "What evidence supports every sentence that describes collection, transmission, storage, or deletion?"

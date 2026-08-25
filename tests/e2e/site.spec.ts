@@ -12,8 +12,14 @@ const publicPages = [
 test("the support hub exposes Dungeon resources", async ({ page }) => {
   await page.goto("/");
   await expect(
-    page.getByRole("heading", { level: 1, name: "Apps and support resources" }),
+    page.getByRole("heading", {
+      level: 1,
+      name: "Support for Asphalt Condensation apps",
+    }),
   ).toBeVisible();
+  await expect(page.getByText("View on GitHub", { exact: true })).toHaveCount(
+    0,
+  );
   await expect(
     page.getByRole("heading", {
       level: 3,

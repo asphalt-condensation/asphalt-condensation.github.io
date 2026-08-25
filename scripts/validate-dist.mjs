@@ -33,7 +33,7 @@ function internalTargetExists(rawUrl) {
 }
 
 if (!fs.existsSync(dist)) {
-  console.error("dist/ does not exist. Run npm run build first.");
+  console.error("dist/ does not exist. Run 'rocket site build' first.");
   process.exit(1);
 }
 
@@ -41,6 +41,8 @@ const htmlFiles = filesUnder(dist, ".html");
 if (htmlFiles.length === 0) errors.push("dist contains no HTML files.");
 
 const emailPattern = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i;
+const repositoryRoot =
+  "https://github.com/asphalt-condensation/asphalt-condensation.github.io";
 
 for (const file of htmlFiles) {
   const html = fs.readFileSync(file, "utf8");
@@ -61,6 +63,9 @@ for (const file of htmlFiles) {
   if (headings.length !== 1)
     fail(file, `expected one h1, found ${headings.length}.`);
   if (emailPattern.test(html)) fail(file, "contains a public email address.");
+  if (/View on GitHub|在 GitHub 上查看/i.test(html)) {
+    fail(file, "contains the removed public-repository footer label.");
+  }
 
   for (const image of document.querySelectorAll("img")) {
     if (!image.hasAttribute("alt"))
@@ -72,6 +77,23 @@ for (const file of htmlFiles) {
       element.getAttribute("href") ?? element.getAttribute("src") ?? "";
     if (!internalTargetExists(rawUrl))
       fail(file, `broken internal reference '${rawUrl}'.`);
+  }
+
+  for (const anchor of document.querySelectorAll("a[href]")) {
+    const href = anchor.getAttribute("href")?.replace(/\/$/, "");
+    if (href === repositoryRoot) {
+      fail(file, "links directly to the public source repository.");
+    }
+  }
+
+  for (const asset of document.querySelectorAll(
+    'script[src], link[rel="stylesheet"][href], img[src]',
+  )) {
+    const rawUrl =
+      asset.getAttribute("src") ?? asset.getAttribute("href") ?? "";
+    if (/^https?:\/\//i.test(rawUrl)) {
+      fail(file, `loads remote page asset '${rawUrl}'.`);
+    }
   }
 }
 

@@ -21,7 +21,7 @@ This is an operational support site. It should feel quiet, trustworthy, fast, an
 
 ## Color
 
-The base palette combines neutral paper/surface colors, dark ink, a burgundy primary action, teal links, and amber warnings. A manifest's app accent appears in small identity details only.
+The base palette combines neutral paper/surface colors, dark ink, a burgundy primary action, teal links, and amber warnings. The dark brand header and footer frame lighter operational content. A manifest's app accent appears in small identity details only.
 
 When adding an accent:
 

@@ -1,53 +1,116 @@
 ---
+import {
+  ArrowRight,
+  LifeBuoy,
+  LockKeyhole,
+  ShieldCheck,
+  Smartphone,
+} from "@lucide/astro";
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const apps = (await getCollection("apps")).sort((a, b) =>
   a.data.name.localeCompare(b.data.name),
 );
+const issueUrl =
+  apps[0]?.data.issueUrl ??
+  "https://github.com/asphalt-condensation/asphalt-condensation.github.io/issues/new/choose";
+const statusLabels = {
+  available: "Available",
+  "coming-soon": "Coming soon",
+  retired: "Retired",
+};
 ---
 
 <BaseLayout
   title="Asphalt Condensation Support"
   description="Official support and privacy information for apps published by Asphalt Condensation."
 >
-  <div class="hub-shell">
+  <section class="hub-intro">
     <header class="hub-heading">
-      <p class="eyebrow">Official support</p>
-      <h1>Apps and support resources</h1>
+      <p class="eyebrow"><span aria-hidden="true"></span>Official support</p>
+      <h1>Support for Asphalt Condensation apps</h1>
       <p>
-        Find setup help, troubleshooting, privacy information, and public
-        support channels.
+        Product guidance, troubleshooting, and privacy information in one
+        dependable place.
       </p>
+      <ul class="trust-list" aria-label="Site commitments">
+        <li>
+          <ShieldCheck aria-hidden="true" size={17} stroke-width={2.1} />
+          Official resources
+        </li>
+        <li>
+          <LockKeyhole aria-hidden="true" size={17} stroke-width={2.1} />
+          No analytics or tracking
+        </li>
+      </ul>
     </header>
+  </section>
 
+  <div class="hub-shell">
     <section class="app-list" aria-labelledby="apps-heading">
-      <h2 id="apps-heading">Supported apps</h2>
+      <header class="section-heading">
+        <div>
+          <p>App directory</p>
+          <h2 id="apps-heading">Choose an app</h2>
+        </div>
+        <span>{apps.length} {apps.length === 1 ? "app" : "apps"}</span>
+      </header>
       {
         apps.map(({ data: app }) => (
           <article class="app-row" style={`--app-accent: ${app.accent}`}>
-            <img
-              src={app.icon}
-              alt={`${app.name} app icon`}
-              width="88"
-              height="88"
-            />
+            <div class="app-row-art">
+              <img
+                src={app.icon}
+                alt={`${app.name} app icon`}
+                width="96"
+                height="96"
+              />
+            </div>
             <div class="app-row-copy">
-              <div>
-                <h3>{app.name}</h3>
-                <p>{app.summary}</p>
+              <div class="app-row-title">
+                <h3>
+                  <a href={`/${app.slug}/`}>{app.name}</a>
+                </h3>
+                <span>{statusLabels[app.status]}</span>
               </div>
-              <p class="platforms">{app.platform.join(" / ")}</p>
+              <p>{app.summary}</p>
+              <p class="platforms">
+                <Smartphone aria-hidden="true" size={15} stroke-width={2.1} />
+                {app.platform.join(" / ")}
+              </p>
             </div>
             <nav aria-label={`${app.name} resources`}>
               <a class="primary-action" href={`/${app.slug}/`}>
-                Support
+                <LifeBuoy aria-hidden="true" size={17} stroke-width={2.2} />
+                Support{" "}
+                <ArrowRight aria-hidden="true" size={16} stroke-width={2.2} />
               </a>
-              <a href={`/${app.slug}/privacy/`}>Privacy</a>
+              <a class="secondary-action" href={`/${app.slug}/privacy/`}>
+                <ShieldCheck aria-hidden="true" size={17} stroke-width={2.1} />
+                Privacy
+              </a>
             </nav>
           </article>
         ))
       }
     </section>
+
+    <aside class="support-strip" aria-labelledby="support-strip-heading">
+      <div class="support-strip-copy">
+        <LifeBuoy aria-hidden="true" size={24} stroke-width={1.9} />
+        <div>
+          <h2 id="support-strip-heading">Need help with a listed app?</h2>
+          <p>
+            Open a public support request after removing personal or sensitive
+            information.
+          </p>
+        </div>
+      </div>
+      <a class="secondary-action" href={issueUrl} rel="noreferrer">
+        Open support form
+        <ArrowRight aria-hidden="true" size={16} stroke-width={2.2} />
+      </a>
+    </aside>
   </div>
 </BaseLayout>

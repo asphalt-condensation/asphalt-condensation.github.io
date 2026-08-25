@@ -22,7 +22,7 @@ Do not infer privacy behavior from an older version, marketing description, or o
 ## 2. Run the scaffold
 
 ```bash
-npm run new:app -- --slug example-app --name "Example App" --zh-name "示例 App" --platform iOS
+npx rocket site new-app --slug example-app --name "Example App" --zh-name "示例 App" --platform iOS
 ```
 
 The script creates:
@@ -100,10 +100,10 @@ Do not put App Review-only contact data or credentials in this public file.
 ## 9. Test
 
 ```bash
-npm run format
-npm run check
-npx playwright install chromium
-npm run test:e2e
+npx rocket site format
+npx rocket site check
+npx rocket site browsers
+npx rocket site test
 ```
 
 Extend `tests/e2e/site.spec.ts` so the new app appears on the hub and its support, privacy, and language routes are navigable. Inspect desktop and mobile screenshots.

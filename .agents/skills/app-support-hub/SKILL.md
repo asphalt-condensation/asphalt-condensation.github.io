@@ -31,7 +31,7 @@ Read [`references/workflow-map.md`](references/workflow-map.md) when selecting f
 Run the deterministic scaffold with all required arguments:
 
 ```bash
-npm run new:app -- --slug <slug> --name "<English name>" --zh-name "<Chinese name>" --platform iOS
+npx rocket site new-app --slug <slug> --name "<English name>" --zh-name "<Chinese name>" --platform iOS
 ```
 
 Then replace every placeholder with verified content, add the owned icon, update Issue Forms and labels, create `docs/apps/<slug>.md`, extend browser tests, and follow `docs/ADD_AN_APP.md`.
@@ -57,10 +57,10 @@ Follow `docs/DEPLOYMENT.md`, `docs/REPOSITORY_SETTINGS.md`, and `docs/APP_STORE_
 After edits:
 
 ```bash
-npm run format
-npm run check
-npx playwright install chromium
-npm run test:e2e
+npx rocket site format
+npx rocket site check
+npx rocket site browsers
+npx rocket site test
 ```
 
 For visible changes, inspect desktop and mobile screenshots. Confirm app names wrap correctly, controls do not overlap, the icon is sharp, and all first-viewport actions remain visible.

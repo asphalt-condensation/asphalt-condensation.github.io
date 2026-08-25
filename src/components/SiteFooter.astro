@@ -1,28 +1,32 @@
 ---
+import { ShieldCheck } from "@lucide/astro";
+
 interface Props {
   locale?: string;
-  repositoryUrl?: string;
 }
 
-const {
-  locale = "en",
-  repositoryUrl = "https://github.com/asphalt-condensation/asphalt-condensation.github.io",
-} = Astro.props;
+const { locale = "en" } = Astro.props;
 const zh = locale === "zh-hans";
 ---
 
 <footer class="site-footer">
-  <div>
-    <strong>Asphalt Condensation Support</strong>
-    <p>
-      {
-        zh
-          ? "此站点不使用分析、广告或追踪脚本。"
-          : "This site uses no analytics, advertising, or tracking scripts."
-      }
-    </p>
+  <div class="footer-inner">
+    <a class="footer-brand" href="/">
+      <img src="/favicon.svg" alt="" width="32" height="32" />
+      <span>
+        <strong>Asphalt Condensation</strong>
+        <small>{zh ? "官方 App 支持" : "Official app support"}</small>
+      </span>
+    </a>
+    <div class="footer-privacy">
+      <ShieldCheck aria-hidden="true" size={18} stroke-width={2} />
+      <p>
+        {
+          zh
+            ? "无数据分析、广告或追踪脚本。"
+            : "No analytics, advertising, or tracking scripts."
+        }
+      </p>
+    </div>
   </div>
-  <a href={repositoryUrl} rel="noreferrer"
-    >{zh ? "在 GitHub 上查看" : "View on GitHub"}</a
-  >
 </footer>

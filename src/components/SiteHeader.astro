@@ -1,4 +1,6 @@
 ---
+import { ChevronRight } from "@lucide/astro";
+
 interface Props {
   currentApp?: string;
   locale?: string;
@@ -11,15 +13,27 @@ const homeLabel = locale === "zh-hans" ? "全部 App" : "All apps";
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="/" aria-label="Asphalt Condensation Support home">
-      <span class="brand-mark" aria-hidden="true">AC</span>
-      <span>Asphalt Condensation Support</span>
+      <img
+        class="brand-mark"
+        src="/favicon.svg"
+        alt=""
+        width="38"
+        height="38"
+      />
+      <span class="brand-copy">
+        <strong class="brand-full">Asphalt Condensation</strong>
+        <strong class="brand-short">Asphalt</strong>
+        <span>Support</span>
+      </span>
     </a>
     {
       currentApp && (
-        <nav aria-label="Breadcrumb">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
           <a href="/">{homeLabel}</a>
-          <span aria-hidden="true">/</span>
-          <span aria-current="page">{currentApp}</span>
+          <ChevronRight aria-hidden="true" size={15} stroke-width={2.2} />
+          <span class="breadcrumb-current" aria-current="page">
+            {currentApp}
+          </span>
         </nav>
       )
     }

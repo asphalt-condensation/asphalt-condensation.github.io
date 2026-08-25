@@ -15,7 +15,8 @@
     "check:content": "node scripts/validate-content.mjs",
     "check:dist": "node scripts/validate-dist.mjs",
     "check:format": "prettier --check .",
-    "check": "npm run check:format && npm run check:content && npm run check:astro && npm run build && npm run check:dist",
+    "check:public": "node scripts/check-public-safety.mjs",
+    "check": "npm run check:format && npm run check:public && npm run check:content && npm run check:astro && npm run build && npm run check:dist",
     "format": "prettier --write .",
     "test:e2e": "playwright test",
     "new:app": "node .agents/skills/app-support-hub/scripts/scaffold-app.mjs"
@@ -26,6 +27,8 @@
   "devDependencies": {
     "@astrojs/check": "0.9.10",
     "@axe-core/playwright": "4.13.0",
+    "@kevz-labs/rocket": "0.1.2",
+    "@lucide/astro": "1.34.0",
     "@playwright/test": "1.62.1",
     "@types/node": "24.13.3",
     "gray-matter": "4.0.3",

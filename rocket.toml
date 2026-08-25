@@ -1,0 +1,29 @@
+version = 1
+name = "asphalt-condensation-support"
+default_profile = "site"
+
+[profiles.site]
+description = "Local development, validation, and release checks for the support hub."
+
+[profiles.site.commands]
+setup = "npm ci"
+launch = "npm run dev"
+preview = "npm run preview"
+serve-test = "npm run serve:test"
+format = "npm run format"
+audit = "npm run check:public"
+check = "npm run check"
+browsers = "npx playwright install chromium"
+browsers-ci = "npx playwright install --with-deps chromium"
+test = "npm run test:e2e"
+build = "npm run build"
+new-app = "npm run new:app --"
+
+[[profiles.site.health]]
+name = "support hub"
+type = "http"
+target = "http://127.0.0.1:4321/"
+
+[[profiles.site.urls]]
+name = "support hub"
+target = "http://127.0.0.1:4321/"

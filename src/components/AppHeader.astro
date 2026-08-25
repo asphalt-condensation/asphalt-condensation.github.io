@@ -1,4 +1,6 @@
 ---
+import { Languages, LifeBuoy, ShieldCheck } from "@lucide/astro";
+
 interface LocaleLink {
   code: string;
   label: string;
@@ -45,13 +47,15 @@ const statusLabel = {
 ---
 
 <section class="app-intro" style={`--app-accent: ${accent}`}>
-  <img
-    class="app-icon"
-    src={icon}
-    alt={`${name} app icon`}
-    width="112"
-    height="112"
-  />
+  <div class="app-icon-frame">
+    <img
+      class="app-icon"
+      src={icon}
+      alt={`${name} app icon`}
+      width="112"
+      height="112"
+    />
+  </div>
   <div class="app-title-group">
     <div
       class="status-row"
@@ -71,32 +75,38 @@ const statusLabel = {
       href={supportHref}
       aria-current={kind === "support" ? "page" : undefined}
     >
+      <LifeBuoy aria-hidden="true" size={16} stroke-width={2.1} />
       {zh ? "支持" : "Support"}
     </a>
     <a
       href={privacyHref}
       aria-current={kind === "privacy" ? "page" : undefined}
     >
+      <ShieldCheck aria-hidden="true" size={16} stroke-width={2.1} />
       {zh ? "隐私" : "Privacy"}
     </a>
   </nav>
   <div class="page-actions">
-    <nav class="language-links" aria-label={zh ? "语言" : "Language"}>
-      {
-        localeLinks.map((item) => (
-          <a
-            href={item.href}
-            lang={item.code}
-            aria-current={item.current ? "page" : undefined}
-          >
-            {item.label}
-          </a>
-        ))
-      }
-    </nav>
+    <div class="language-control">
+      <Languages aria-hidden="true" size={17} stroke-width={2} />
+      <nav class="language-links" aria-label={zh ? "语言" : "Language"}>
+        {
+          localeLinks.map((item) => (
+            <a
+              href={item.href}
+              lang={item.code}
+              aria-current={item.current ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
     {
       kind === "support" && (
         <a class="primary-action" href={issueUrl} rel="noreferrer">
+          <LifeBuoy aria-hidden="true" size={17} stroke-width={2.2} />
           {zh ? "提交支持请求" : "Open a support request"}
         </a>
       )
