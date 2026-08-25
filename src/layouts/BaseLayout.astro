@@ -1,0 +1,46 @@
+---
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  locale?: string;
+  currentApp?: string;
+  repositoryUrl?: string;
+}
+
+const {
+  title,
+  description,
+  locale = "en",
+  currentApp,
+  repositoryUrl,
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#171817" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content"
+      >{locale === "zh-hans" ? "跳到正文" : "Skip to content"}</a
+    >
+    <SiteHeader currentApp={currentApp} locale={locale} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <SiteFooter locale={locale} repositoryUrl={repositoryUrl} />
+  </body>
+</html>

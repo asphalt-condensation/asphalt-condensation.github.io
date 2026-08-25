@@ -1,0 +1,27 @@
+---
+interface Props {
+  currentApp?: string;
+  locale?: string;
+}
+
+const { currentApp, locale = "en" } = Astro.props;
+const homeLabel = locale === "zh-hans" ? "全部 App" : "All apps";
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="Asphalt Condensation Support home">
+      <span class="brand-mark" aria-hidden="true">AC</span>
+      <span>Asphalt Condensation Support</span>
+    </a>
+    {
+      currentApp && (
+        <nav aria-label="Breadcrumb">
+          <a href="/">{homeLabel}</a>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">{currentApp}</span>
+        </nav>
+      )
+    }
+  </div>
+</header>

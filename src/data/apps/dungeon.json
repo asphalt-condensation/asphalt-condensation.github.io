@@ -1,0 +1,33 @@
+{
+  "slug": "dungeon",
+  "name": "Dungeon: Memory in the Dark",
+  "summary": "An offline, audio-first psychological horror game for iPhone and iPad.",
+  "localized": {
+    "en": {
+      "name": "Dungeon: Memory in the Dark",
+      "summary": "An offline, audio-first psychological horror game for iPhone and iPad."
+    },
+    "zh-hans": {
+      "name": "地牢：黑暗中的记忆",
+      "summary": "一款适用于 iPhone 和 iPad、以声音为核心的离线心理恐怖游戏。"
+    }
+  },
+  "platform": ["iOS", "iPadOS"],
+  "status": "coming-soon",
+  "icon": "/apps/dungeon/icon.png",
+  "accent": "#A12C3A",
+  "defaultLocale": "en",
+  "locales": [
+    {
+      "code": "en",
+      "label": "English"
+    },
+    {
+      "code": "zh-hans",
+      "label": "简体中文"
+    }
+  ],
+  "issueUrl": "https://github.com/asphalt-condensation/asphalt-condensation.github.io/issues/new/choose",
+  "repositoryUrl": "https://github.com/asphalt-condensation/asphalt-condensation.github.io",
+  "collectsData": false
+}

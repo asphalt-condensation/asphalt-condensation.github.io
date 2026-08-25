@@ -1,0 +1,105 @@
+---
+interface LocaleLink {
+  code: string;
+  label: string;
+  href: string;
+  current: boolean;
+}
+
+interface Props {
+  name: string;
+  summary: string;
+  icon: string;
+  platforms: string[];
+  status: "available" | "coming-soon" | "retired";
+  accent: string;
+  localeLinks: LocaleLink[];
+  supportHref: string;
+  privacyHref: string;
+  issueUrl: string;
+  kind: "support" | "privacy";
+  locale: string;
+}
+
+const {
+  name,
+  summary,
+  icon,
+  platforms,
+  status,
+  accent,
+  localeLinks,
+  supportHref,
+  privacyHref,
+  issueUrl,
+  kind,
+  locale,
+} = Astro.props;
+
+const zh = locale === "zh-hans";
+const statusLabel = {
+  available: zh ? "已发布" : "Available",
+  "coming-soon": zh ? "即将发布" : "Coming soon",
+  retired: zh ? "已停止维护" : "Retired",
+}[status];
+---
+
+<section class="app-intro" style={`--app-accent: ${accent}`}>
+  <img
+    class="app-icon"
+    src={icon}
+    alt={`${name} app icon`}
+    width="112"
+    height="112"
+  />
+  <div class="app-title-group">
+    <div
+      class="status-row"
+      aria-label={zh ? "平台和状态" : "Platforms and status"}
+    >
+      {platforms.map((platform) => <span>{platform}</span>)}
+      <span class="status">{statusLabel}</span>
+    </div>
+    <h1>{name}</h1>
+    <p>{summary}</p>
+  </div>
+</section>
+
+<div class="page-tools">
+  <nav class="section-tabs" aria-label={zh ? "页面" : "Page sections"}>
+    <a
+      href={supportHref}
+      aria-current={kind === "support" ? "page" : undefined}
+    >
+      {zh ? "支持" : "Support"}
+    </a>
+    <a
+      href={privacyHref}
+      aria-current={kind === "privacy" ? "page" : undefined}
+    >
+      {zh ? "隐私" : "Privacy"}
+    </a>
+  </nav>
+  <div class="page-actions">
+    <nav class="language-links" aria-label={zh ? "语言" : "Language"}>
+      {
+        localeLinks.map((item) => (
+          <a
+            href={item.href}
+            lang={item.code}
+            aria-current={item.current ? "page" : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+    {
+      kind === "support" && (
+        <a class="primary-action" href={issueUrl} rel="noreferrer">
+          {zh ? "提交支持请求" : "Open a support request"}
+        </a>
+      )
+    }
+  </div>
+</div>

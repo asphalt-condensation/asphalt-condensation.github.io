@@ -1,0 +1,64 @@
+name: App support request
+description: Ask for help using an Asphalt Condensation app.
+title: "[Support] "
+labels:
+  - support
+  - needs-triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This request will be public. Do not include your email address, real name, device identifiers, account information, or screenshots containing personal information.
+  - type: dropdown
+    id: app
+    attributes:
+      label: App
+      options:
+        - Dungeon
+        - Another listed app
+    validations:
+      required: true
+  - type: dropdown
+    id: topic
+    attributes:
+      label: Topic
+      options:
+        - Getting started or controls
+        - Audio
+        - Display or orientation
+        - Saved preferences
+        - Privacy question
+        - Other support question
+    validations:
+      required: true
+  - type: input
+    id: app-version
+    attributes:
+      label: App version
+      description: Find this in the App Store or the app's About screen when available.
+      placeholder: "1.0"
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device and operating system
+      placeholder: "iPhone 16, iOS 20.0"
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: What do you need help with?
+      description: Describe the result you want and what is preventing it.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Public-post confirmation
+      options:
+        - label: I searched existing issues for the same question.
+          required: true
+        - label: I removed private and sensitive information from this public report.
+          required: true

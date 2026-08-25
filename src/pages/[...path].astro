@@ -1,0 +1,96 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import AppHeader from "../components/AppHeader.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const pages = await getCollection("pages");
+  return pages.map((entry) => ({
+    params: { path: entry.data.route },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<"pages">;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const apps = await getCollection("apps");
+const pages = await getCollection("pages");
+const appEntry = apps.find(
+  (candidate) => candidate.data.slug === entry.data.app,
+);
+
+if (!appEntry) {
+  throw new Error(`Unknown app '${entry.data.app}' for page '${entry.id}'.`);
+}
+
+const app = appEntry.data;
+const localizedApp = app.localized[entry.data.locale] ?? {
+  name: app.name,
+  summary: app.summary,
+};
+const localizedPages = pages.filter(
+  (candidate) =>
+    candidate.data.app === app.slug && candidate.data.kind === entry.data.kind,
+);
+
+const pageFor = (locale: string, kind: "support" | "privacy") => {
+  const page = pages.find(
+    (candidate) =>
+      candidate.data.app === app.slug &&
+      candidate.data.locale === locale &&
+      candidate.data.kind === kind,
+  );
+  if (!page) throw new Error(`Missing ${kind} page for ${app.slug}/${locale}.`);
+  return `/${page.data.route}/`;
+};
+
+const localeLinks = app.locales.map((locale) => {
+  const localized = localizedPages.find(
+    (candidate) => candidate.data.locale === locale.code,
+  );
+  if (!localized)
+    throw new Error(
+      `Missing ${entry.data.kind} page for ${app.slug}/${locale.code}.`,
+    );
+  return {
+    code: locale.code,
+    label: locale.label,
+    href: `/${localized.data.route}/`,
+    current: locale.code === entry.data.locale,
+  };
+});
+
+const title = `${entry.data.title} | Asphalt Condensation Support`;
+---
+
+<BaseLayout
+  title={title}
+  description={entry.data.description}
+  locale={entry.data.locale}
+  currentApp={localizedApp.name}
+  repositoryUrl={app.repositoryUrl}
+>
+  <div class="page-shell">
+    <AppHeader
+      name={localizedApp.name}
+      summary={localizedApp.summary}
+      icon={app.icon}
+      platforms={app.platform}
+      status={app.status}
+      accent={app.accent}
+      localeLinks={localeLinks}
+      supportHref={pageFor(entry.data.locale, "support")}
+      privacyHref={pageFor(entry.data.locale, "privacy")}
+      issueUrl={app.issueUrl}
+      kind={entry.data.kind}
+      locale={entry.data.locale}
+    />
+    <article class="content-prose">
+      <Content />
+    </article>
+  </div>
+</BaseLayout>

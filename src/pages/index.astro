@@ -1,0 +1,53 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const apps = (await getCollection("apps")).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name),
+);
+---
+
+<BaseLayout
+  title="Asphalt Condensation Support"
+  description="Official support and privacy information for apps published by Asphalt Condensation."
+>
+  <div class="hub-shell">
+    <header class="hub-heading">
+      <p class="eyebrow">Official support</p>
+      <h1>Apps and support resources</h1>
+      <p>
+        Find setup help, troubleshooting, privacy information, and public
+        support channels.
+      </p>
+    </header>
+
+    <section class="app-list" aria-labelledby="apps-heading">
+      <h2 id="apps-heading">Supported apps</h2>
+      {
+        apps.map(({ data: app }) => (
+          <article class="app-row" style={`--app-accent: ${app.accent}`}>
+            <img
+              src={app.icon}
+              alt={`${app.name} app icon`}
+              width="88"
+              height="88"
+            />
+            <div class="app-row-copy">
+              <div>
+                <h3>{app.name}</h3>
+                <p>{app.summary}</p>
+              </div>
+              <p class="platforms">{app.platform.join(" / ")}</p>
+            </div>
+            <nav aria-label={`${app.name} resources`}>
+              <a class="primary-action" href={`/${app.slug}/`}>
+                Support
+              </a>
+              <a href={`/${app.slug}/privacy/`}>Privacy</a>
+            </nav>
+          </article>
+        ))
+      }
+    </section>
+  </div>
+</BaseLayout>

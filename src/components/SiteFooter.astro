@@ -1,0 +1,28 @@
+---
+interface Props {
+  locale?: string;
+  repositoryUrl?: string;
+}
+
+const {
+  locale = "en",
+  repositoryUrl = "https://github.com/asphalt-condensation/asphalt-condensation.github.io",
+} = Astro.props;
+const zh = locale === "zh-hans";
+---
+
+<footer class="site-footer">
+  <div>
+    <strong>Asphalt Condensation Support</strong>
+    <p>
+      {
+        zh
+          ? "此站点不使用分析、广告或追踪脚本。"
+          : "This site uses no analytics, advertising, or tracking scripts."
+      }
+    </p>
+  </div>
+  <a href={repositoryUrl} rel="noreferrer"
+    >{zh ? "在 GitHub 上查看" : "View on GitHub"}</a
+  >
+</footer>

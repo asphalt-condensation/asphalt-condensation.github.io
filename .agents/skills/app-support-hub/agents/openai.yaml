@@ -1,0 +1,8 @@
+interface:
+  display_name: "App Support Hub"
+  short_description: "Maintain multi-app support and privacy pages"
+  brand_color: "#A12C3A"
+  default_prompt: "Use $app-support-hub to update and fully validate this app support repository."
+
+policy:
+  allow_implicit_invocation: true

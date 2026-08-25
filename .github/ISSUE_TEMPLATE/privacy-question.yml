@@ -1,0 +1,34 @@
+name: General privacy question
+description: Ask a non-sensitive question about an app's published privacy policy.
+title: "[Privacy] "
+labels:
+  - privacy
+  - needs-triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This form creates a public GitHub Issue. Do not use it for personal-data requests, security vulnerabilities, or any message containing sensitive information.
+  - type: dropdown
+    id: app
+    attributes:
+      label: App
+      options:
+        - Dungeon
+        - Another listed app
+    validations:
+      required: true
+  - type: textarea
+    id: policy-question
+    attributes:
+      label: Policy question
+      description: Refer to the policy heading or statement you are asking about.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Public-post confirmation
+      options:
+        - label: My question contains no private or sensitive information.
+          required: true

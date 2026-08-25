@@ -1,0 +1,71 @@
+name: App bug report
+description: Report behavior that can be reproduced in an Asphalt Condensation app.
+title: "[Bug] "
+labels:
+  - bug
+  - needs-triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve the app. This report is public. Do not include private or sensitive information.
+  - type: dropdown
+    id: app
+    attributes:
+      label: App
+      options:
+        - Dungeon
+        - Another listed app
+    validations:
+      required: true
+  - type: input
+    id: app-version
+    attributes:
+      label: App version
+      placeholder: "1.0"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Device and operating system
+      placeholder: "iPad Pro 11-inch, iPadOS 20.0"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Provide the shortest reliable sequence, one step per line.
+      placeholder: |
+        1. Open the app
+        2. Start Level 1
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+    validations:
+      required: true
+  - type: textarea
+    id: frequency
+    attributes:
+      label: Frequency and workarounds
+      description: Tell us whether it happens every time and whether anything restores normal behavior.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Public-post confirmation
+      options:
+        - label: I searched existing issues for this behavior.
+          required: true
+        - label: I removed private and sensitive information from this public report.
+          required: true
