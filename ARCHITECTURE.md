@@ -43,5 +43,6 @@ GitHub Pages is the sole production host. A successful historical commit is the 
 - Runtime dependency: Astro only.
 - Development dependencies: type checking, formatting, structured frontmatter/HTML parsing, Playwright, and axe-core.
 - No client JavaScript framework is shipped to visitors.
-- Dependabot checks npm and GitHub Actions monthly.
-- Major dependency upgrades require local `rocket site check` and browser tests before merge.
+- Dependabot alerts and security updates remain enabled, while scheduled version-update pull requests are disabled.
+- Review routine npm and GitHub Actions updates manually each quarter and before major app releases.
+- Security and major dependency upgrades require local `rocket site check` and browser tests before merge.

@@ -35,17 +35,19 @@ Do not choose `main / (root)` or a `docs/` branch source. The deployment artifac
 - Allow GitHub Actions required by this repository.
 - Keep default `GITHUB_TOKEN` permissions read-only; workflows request narrowly scoped write permissions explicitly.
 - Allow Actions to create and approve pull requests only if a future automation genuinely needs it.
-- Review Dependabot pull requests monthly.
+- Keep scheduled Dependabot version-update pull requests disabled through `.github/dependabot.yml`.
+- Review dependency versions manually each quarter and before major app releases.
 
 ## Security
 
 - Private vulnerability reporting: Enabled
 - Dependabot alerts: Enabled
-- Dependabot security updates: Enabled when available
+- Dependabot security updates: Enabled
 - Secret scanning: Enabled for public repositories
 - Push protection: Enabled when available
 
 The public `SECURITY.md` must match the enabled private reporting path.
+Dependabot security pull requests must pass the Rocket checks and browser tests before merge.
 
 ## Branch protection or ruleset
 
@@ -69,7 +71,7 @@ Quarterly, or before a major app release:
 
 - confirm Pages and Issue URLs load signed out;
 - review collaborators and deploy keys;
-- review Actions and dependency versions;
+- review Actions and dependency versions manually;
 - confirm private vulnerability reporting works;
 - check stale app statuses and policies;
 - confirm Issue Forms list every active app;

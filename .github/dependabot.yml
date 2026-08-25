@@ -4,20 +4,9 @@ updates:
     directory: /
     schedule:
       interval: monthly
-    open-pull-requests-limit: 5
-    ignore:
-      - dependency-name: typescript
-        update-types:
-          - version-update:semver-major
-    groups:
-      astro-toolchain:
-        patterns:
-          - astro
-          - "@astrojs/*"
-      testing-and-formatting:
-        dependency-type: development
+    open-pull-requests-limit: 0
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 0
