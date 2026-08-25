@@ -9,10 +9,6 @@ languageLabel: 简体中文
 lastUpdated: 2026-08-25
 ---
 
-《地牢》是一款适用于 iPhone 和 iPad 的离线横屏心理恐怖游戏。
-
-> 支持请求通过公开的 GitHub Issue 处理，提交时需要 GitHub 账号。请勿填写真实姓名、邮箱地址、设备标识符、含有个人信息的截图或其他敏感信息。
-
 ## 推荐设置
 
 - 建议佩戴耳机，以获得完整的方向性声音体验。
@@ -46,12 +42,12 @@ lastUpdated: 2026-08-25
 
 删除并重新安装《地牢》即可重置所选语言和本地保存的死亡次数。此操作无法撤销。
 
-## 提交 Issue 前
+## 获取更多帮助
+
+如果问题仍未解决，你可以通过 GitHub Issue 提交支持请求。
+
+> GitHub Issue 为公开内容，并且需要 GitHub 账号。请勿填写真实姓名、邮箱地址、设备标识符、含有个人信息的截图或其他敏感信息。
 
 请提供 App 版本、设备型号、iOS 或 iPadOS 版本、预期结果、实际结果，以及可以复现问题的最短步骤。建议先搜索现有 Issue，方便相关报告集中处理。
 
 [打开支持请求表单](https://github.com/asphalt-condensation/asphalt-condensation.github.io/issues/new/choose)
-
-## 隐私
-
-《地牢》不会收集或传输个人数据。完整内容请阅读[隐私政策](/dungeon/zh-hans/privacy/)。

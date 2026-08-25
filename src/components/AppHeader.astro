@@ -1,5 +1,5 @@
 ---
-import { Languages, LifeBuoy, ShieldCheck } from "@lucide/astro";
+import { ArrowLeft, Languages, LifeBuoy, ShieldCheck } from "@lucide/astro";
 
 interface LocaleLink {
   code: string;
@@ -18,7 +18,6 @@ interface Props {
   localeLinks: LocaleLink[];
   supportHref: string;
   privacyHref: string;
-  issueUrl: string;
   kind: "support" | "privacy";
   locale: string;
 }
@@ -33,7 +32,6 @@ const {
   localeLinks,
   supportHref,
   privacyHref,
-  issueUrl,
   kind,
   locale,
 } = Astro.props;
@@ -46,49 +44,54 @@ const statusLabel = {
 }[status];
 ---
 
-<section class="app-intro" style={`--app-accent: ${accent}`}>
-  <div class="app-icon-frame">
-    <img
-      class="app-icon"
-      src={icon}
-      alt={`${name} app icon`}
-      width="112"
-      height="112"
-    />
-  </div>
-  <div class="app-title-group">
-    <div
-      class="status-row"
-      aria-label={zh ? "平台和状态" : "Platforms and status"}
-    >
-      {platforms.map((platform) => <span>{platform}</span>)}
-      <span class="status">{statusLabel}</span>
-    </div>
-    <h1>{name}</h1>
-    <p>{summary}</p>
-  </div>
-</section>
+<section class="app-hero" style={`--app-accent: ${accent}`}>
+  <a class="back-link" href="/">
+    <ArrowLeft aria-hidden="true" size={16} stroke-width={2.1} />
+    {zh ? "全部 App" : "All apps"}
+  </a>
 
-<div class="page-tools">
-  <nav class="section-tabs" aria-label={zh ? "页面" : "Page sections"}>
-    <a
-      href={supportHref}
-      aria-current={kind === "support" ? "page" : undefined}
-    >
-      <LifeBuoy aria-hidden="true" size={16} stroke-width={2.1} />
-      {zh ? "支持" : "Support"}
-    </a>
-    <a
-      href={privacyHref}
-      aria-current={kind === "privacy" ? "page" : undefined}
-    >
-      <ShieldCheck aria-hidden="true" size={16} stroke-width={2.1} />
-      {zh ? "隐私" : "Privacy"}
-    </a>
-  </nav>
-  <div class="page-actions">
-    <div class="language-control">
-      <Languages aria-hidden="true" size={17} stroke-width={2} />
+  <div class="app-identity">
+    <div class="app-icon-frame">
+      <img
+        class="app-icon"
+        src={icon}
+        alt={`${name} app icon`}
+        width="96"
+        height="96"
+      />
+    </div>
+    <div class="app-title-group">
+      <div
+        class="status-row"
+        aria-label={zh ? "平台和状态" : "Platforms and status"}
+      >
+        <span class="status">{statusLabel}</span>
+        <span>{platforms.join(" / ")}</span>
+      </div>
+      <h1>{name}</h1>
+      <p>{summary}</p>
+    </div>
+  </div>
+
+  <div class="app-controls">
+    <nav class="section-tabs" aria-label={zh ? "页面" : "Page sections"}>
+      <a
+        href={supportHref}
+        aria-current={kind === "support" ? "page" : undefined}
+      >
+        <LifeBuoy aria-hidden="true" size={16} stroke-width={2.1} />
+        {zh ? "支持" : "Support"}
+      </a>
+      <a
+        href={privacyHref}
+        aria-current={kind === "privacy" ? "page" : undefined}
+      >
+        <ShieldCheck aria-hidden="true" size={16} stroke-width={2.1} />
+        {zh ? "隐私" : "Privacy"}
+      </a>
+    </nav>
+    <div class="language-control" aria-label={zh ? "语言" : "Language"}>
+      <Languages aria-hidden="true" size={16} stroke-width={2} />
       <nav class="language-links" aria-label={zh ? "语言" : "Language"}>
         {
           localeLinks.map((item) => (
@@ -103,13 +106,5 @@ const statusLabel = {
         }
       </nav>
     </div>
-    {
-      kind === "support" && (
-        <a class="primary-action" href={issueUrl} rel="noreferrer">
-          <LifeBuoy aria-hidden="true" size={17} stroke-width={2.2} />
-          {zh ? "提交支持请求" : "Open a support request"}
-        </a>
-      )
-    }
   </div>
-</div>
+</section>

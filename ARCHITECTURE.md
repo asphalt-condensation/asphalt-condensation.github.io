@@ -12,9 +12,10 @@ The site intentionally has no server runtime. Astro validates content and render
 2. `src/data/apps/*.json` provides app identity, locales, platform, status, icon, and support links.
 3. `src/content/pages/**/*.md` provides localized support and privacy prose.
 4. `src/pages/[...path].astro` maps each content entry's stable `route` to one static page.
-5. Shared Astro components render the header, app identity, language selector, support/privacy tabs, and footer.
-6. `astro build` writes static assets and HTML to `dist/`.
-7. GitHub Actions uploads `dist/` as the Pages artifact and deploys it.
+5. Shared Astro components render the app directory, app identity, language selector, support/privacy tabs, topic browser, and footer.
+6. Small local scripts enhance the home page with a canvas particle field and convert Markdown sections into native disclosure controls. The full documents remain readable without JavaScript.
+7. `astro build` writes static assets and HTML to `dist/`.
+8. GitHub Actions uploads `dist/` as the Pages artifact and deploys it.
 
 ## Why a typed content layer
 
@@ -42,7 +43,7 @@ GitHub Pages is the sole production host. A successful historical commit is the 
 
 - Runtime dependency: Astro only.
 - Development dependencies: type checking, formatting, structured frontmatter/HTML parsing, Playwright, and axe-core.
-- No client JavaScript framework is shipped to visitors.
+- No client JavaScript framework or remote script is shipped to visitors. Local enhancement scripts must preserve a complete static fallback.
 - Dependabot alerts and security updates remain enabled, while scheduled version-update pull requests are disabled.
 - Review routine npm and GitHub Actions updates manually each quarter and before major app releases.
 - Security and major dependency upgrades require local `rocket site check` and browser tests before merge.

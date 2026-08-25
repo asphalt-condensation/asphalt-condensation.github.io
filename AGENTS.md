@@ -63,6 +63,7 @@ The default locale does not appear in the path. Locale codes are lowercase and u
 
 - Keep the site quiet, direct, operational, and easy to scan. It is a support tool, not a marketing landing page.
 - Use the shared neutral palette with a restrained per-app accent. Do not create a one-color theme or decorative gradient background.
+- Keep the local canvas particle field limited to the app directory, non-blocking, free of remote input, and static under reduced motion.
 - Keep cards at an 8px radius or less. Do not nest cards or turn page sections into floating cards.
 - Keep the app identity visible in the first viewport on app pages.
 - Prefer semantic HTML and static rendering. Add client JavaScript only when the requirement cannot be met with HTML and CSS.

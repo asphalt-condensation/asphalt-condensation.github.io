@@ -14,7 +14,7 @@ const publicFiles = execFileSync(
   },
 )
   .split("\0")
-  .filter(Boolean);
+  .filter((file) => file && fs.existsSync(path.join(root, file)));
 
 const forbiddenFiles = [
   /(^|\/)\.env(?:\.|$)/i,

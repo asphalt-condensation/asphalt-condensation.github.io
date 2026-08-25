@@ -1,16 +1,15 @@
 ---
 import SiteFooter from "../components/SiteFooter.astro";
-import SiteHeader from "../components/SiteHeader.astro";
 import "../styles/global.css";
 
 interface Props {
   title: string;
   description: string;
   locale?: string;
-  currentApp?: string;
+  pageClass?: string;
 }
 
-const { title, description, locale = "en", currentApp } = Astro.props;
+const { title, description, locale = "en", pageClass } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -20,17 +19,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="color-scheme" content="light" />
-    <meta name="theme-color" content="#171817" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0c0e0e" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{title}</title>
   </head>
-  <body>
+  <body class={pageClass}>
     <a class="skip-link" href="#main-content"
       >{locale === "zh-hans" ? "跳到正文" : "Skip to content"}</a
     >
-    <SiteHeader currentApp={currentApp} locale={locale} />
     <main id="main-content">
       <slot />
     </main>

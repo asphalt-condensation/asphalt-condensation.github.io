@@ -1,6 +1,7 @@
 ---
 import { getCollection, render, type CollectionEntry } from "astro:content";
 import AppHeader from "../components/AppHeader.astro";
+import ResourceBrowser from "../components/ResourceBrowser.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
@@ -71,7 +72,7 @@ const title = `${entry.data.title} | Asphalt Condensation Support`;
   title={title}
   description={entry.data.description}
   locale={entry.data.locale}
-  currentApp={localizedApp.name}
+  pageClass="app-page"
 >
   <div class="page-shell">
     <AppHeader
@@ -84,12 +85,11 @@ const title = `${entry.data.title} | Asphalt Condensation Support`;
       localeLinks={localeLinks}
       supportHref={pageFor(entry.data.locale, "support")}
       privacyHref={pageFor(entry.data.locale, "privacy")}
-      issueUrl={app.issueUrl}
       kind={entry.data.kind}
       locale={entry.data.locale}
     />
-    <article class="content-prose">
+    <ResourceBrowser kind={entry.data.kind} locale={entry.data.locale}>
       <Content />
-    </article>
+    </ResourceBrowser>
   </div>
 </BaseLayout>

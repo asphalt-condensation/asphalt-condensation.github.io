@@ -1,0 +1,118 @@
+---
+interface Props {
+  kind: "support" | "privacy";
+  locale: string;
+}
+
+const { kind, locale } = Astro.props;
+const zh = locale === "zh-hans";
+const heading =
+  kind === "support"
+    ? zh
+      ? "你需要哪方面的帮助？"
+      : "What do you need help with?"
+    : zh
+      ? "隐私政策内容"
+      : "Privacy policy contents";
+const description =
+  kind === "support"
+    ? zh
+      ? "选择一项，只查看当前需要的内容。"
+      : "Choose a topic and focus on one answer at a time."
+    : zh
+      ? "选择一个主题查看详细政策。"
+      : "Choose a topic to read the relevant policy details.";
+---
+
+<section
+  class="resource-browser"
+  data-resource-browser
+  data-kind={kind}
+  aria-labelledby="resource-heading"
+>
+  <header class="resource-heading">
+    <h2 id="resource-heading">{heading}</h2>
+    <p>{description}</p>
+  </header>
+  <article class="content-prose">
+    <slot />
+  </article>
+</section>
+
+<script>
+  for (const browser of document.querySelectorAll<HTMLElement>(
+    "[data-resource-browser]",
+  )) {
+    const prose = browser.querySelector<HTMLElement>(".content-prose");
+    if (!prose || prose.dataset.enhanced === "true") continue;
+
+    const nodes = Array.from(prose.children);
+    const firstHeading = nodes.findIndex((node) => node.tagName === "H2");
+    if (firstHeading < 0) continue;
+
+    const fragment = document.createDocumentFragment();
+    if (firstHeading > 0) {
+      const prelude = document.createElement("div");
+      prelude.className = "content-prelude";
+      for (const node of nodes.slice(0, firstHeading)) prelude.append(node);
+      fragment.append(prelude);
+    }
+
+    const list = document.createElement("div");
+    list.className = "resource-list";
+    let index = firstHeading;
+    let sectionNumber = 1;
+
+    while (index < nodes.length) {
+      const heading = nodes[index];
+      if (heading.tagName !== "H2") {
+        index += 1;
+        continue;
+      }
+
+      const details = document.createElement("details");
+      details.className = "resource-item";
+      details.name = `resource-${browser.dataset.kind ?? "section"}`;
+
+      const summary = document.createElement("summary");
+      const number = document.createElement("span");
+      number.className = "resource-number";
+      number.setAttribute("aria-hidden", "true");
+      number.textContent = String(sectionNumber).padStart(2, "0");
+
+      const title = document.createElement("h3");
+      title.innerHTML = heading.innerHTML;
+      if (heading.id) title.id = heading.id;
+
+      const toggle = document.createElement("span");
+      toggle.className = "resource-toggle";
+      toggle.setAttribute("aria-hidden", "true");
+
+      summary.append(number, title, toggle);
+      details.append(summary);
+
+      const body = document.createElement("div");
+      body.className = "resource-body";
+      index += 1;
+      while (index < nodes.length && nodes[index].tagName !== "H2") {
+        const node = nodes[index];
+        if (node.tagName === "H3") {
+          const subheading = document.createElement("h4");
+          subheading.innerHTML = node.innerHTML;
+          if (node.id) subheading.id = node.id;
+          body.append(subheading);
+        } else {
+          body.append(node);
+        }
+        index += 1;
+      }
+      details.append(body);
+      list.append(details);
+      sectionNumber += 1;
+    }
+
+    fragment.append(list);
+    prose.replaceChildren(fragment);
+    prose.dataset.enhanced = "true";
+  }
+</script>

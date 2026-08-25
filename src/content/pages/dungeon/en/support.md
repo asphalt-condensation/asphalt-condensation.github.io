@@ -9,10 +9,6 @@ languageLabel: English
 lastUpdated: 2026-08-25
 ---
 
-Dungeon is an offline, landscape-only psychological horror game for iPhone and iPad.
-
-> Support requests are handled through public GitHub Issues. You need a GitHub account to post. Do not include your real name, email address, device identifiers, screenshots containing personal information, or any other sensitive data.
-
 ## Recommended setup
 
 - Use headphones for the intended directional-audio experience.
@@ -46,12 +42,12 @@ Make sure you are touching the active control areas shown by the tutorial. Lift 
 
 Deleting and reinstalling Dungeon resets the selected language and locally stored death count. This cannot be undone.
 
-## Before opening an issue
+## Get more help
+
+If the problem continues, you can open a support request through GitHub Issues.
+
+> GitHub Issues are public and require a GitHub account. Do not include your real name, email address, device identifiers, screenshots containing personal information, or any other sensitive data.
 
 Please include the app version, device model, iOS or iPadOS version, what you expected, what happened, and the shortest sequence that reproduces the problem. Search existing issues first so related reports can stay together.
 
 [Open the support request form](https://github.com/asphalt-condensation/asphalt-condensation.github.io/issues/new/choose)
-
-## Privacy
-
-Dungeon does not collect or transmit personal data. Read the [full privacy policy](/dungeon/privacy/).

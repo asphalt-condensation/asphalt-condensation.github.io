@@ -1,0 +1,134 @@
+<canvas class="particle-field" data-particle-field aria-hidden="true"></canvas>
+
+<script>
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  for (const canvas of document.querySelectorAll<HTMLCanvasElement>(
+    "[data-particle-field]",
+  )) {
+    const context = canvas.getContext("2d");
+    const host = canvas.parentElement;
+    if (!context || !host) continue;
+
+    let width = 0;
+    let height = 0;
+    let frame = 0;
+    let pointerX = -1000;
+    let pointerY = -1000;
+    let particles: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      radius: number;
+      tone: number;
+    }> = [];
+
+    const palette = [
+      "rgba(236, 240, 237, 0.44)",
+      "rgba(185, 49, 66, 0.62)",
+      "rgba(73, 165, 170, 0.5)",
+    ];
+
+    const createParticles = () => {
+      const count = Math.max(
+        22,
+        Math.min(58, Math.round((width * height) / 24000)),
+      );
+      particles = Array.from({ length: count }, (_, index) => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.22,
+        vy: (Math.random() - 0.5) * 0.22,
+        radius: 0.7 + Math.random() * 1.2,
+        tone: index % palette.length,
+      }));
+    };
+
+    const resize = () => {
+      const bounds = host.getBoundingClientRect();
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      width = Math.max(1, bounds.width);
+      height = Math.max(1, bounds.height);
+      canvas.width = Math.round(width * ratio);
+      canvas.height = Math.round(height * ratio);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      context.setTransform(ratio, 0, 0, ratio, 0, 0);
+      createParticles();
+      start();
+    };
+
+    const draw = (still = false) => {
+      context.clearRect(0, 0, width, height);
+
+      for (let index = 0; index < particles.length; index += 1) {
+        const particle = particles[index];
+        if (!still) {
+          const dx = pointerX - particle.x;
+          const dy = pointerY - particle.y;
+          const distance = Math.hypot(dx, dy);
+          if (distance < 150 && distance > 0) {
+            particle.vx -= (dx / distance) * 0.0025;
+            particle.vy -= (dy / distance) * 0.0025;
+          }
+          particle.vx *= 0.998;
+          particle.vy *= 0.998;
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+          if (particle.x < -8) particle.x = width + 8;
+          if (particle.x > width + 8) particle.x = -8;
+          if (particle.y < -8) particle.y = height + 8;
+          if (particle.y > height + 8) particle.y = -8;
+        }
+
+        for (
+          let neighbor = index + 1;
+          neighbor < particles.length;
+          neighbor += 1
+        ) {
+          const other = particles[neighbor];
+          const distance = Math.hypot(
+            particle.x - other.x,
+            particle.y - other.y,
+          );
+          if (distance < 112) {
+            context.beginPath();
+            context.moveTo(particle.x, particle.y);
+            context.lineTo(other.x, other.y);
+            context.strokeStyle = `rgba(197, 207, 201, ${0.08 * (1 - distance / 112)})`;
+            context.lineWidth = 0.7;
+            context.stroke();
+          }
+        }
+
+        context.beginPath();
+        context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+        context.fillStyle = palette[particle.tone];
+        context.fill();
+      }
+
+      if (!still && !document.hidden && !reducedMotion.matches) {
+        frame = window.requestAnimationFrame(() => draw());
+      }
+    };
+
+    const start = () => {
+      window.cancelAnimationFrame(frame);
+      draw(reducedMotion.matches);
+    };
+
+    host.addEventListener("pointermove", (event) => {
+      const bounds = host.getBoundingClientRect();
+      pointerX = event.clientX - bounds.left;
+      pointerY = event.clientY - bounds.top;
+    });
+    host.addEventListener("pointerleave", () => {
+      pointerX = -1000;
+      pointerY = -1000;
+    });
+    document.addEventListener("visibilitychange", start);
+    reducedMotion.addEventListener("change", start);
+    new ResizeObserver(resize).observe(host);
+  }
+</script>
